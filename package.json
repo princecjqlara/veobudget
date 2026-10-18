@@ -1,0 +1,15 @@
+{
+  "name": "veobudget",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A browser-only ad budget and project sales quota calculator.",
+  "scripts": {
+    "build": "node build.cjs",
+    "dev": "node build.cjs && node preview.cjs",
+    "preview": "node preview.cjs",
+    "test": "node verify-model.cjs",
+    "test:hosting": "node verify-hosting.cjs",
+    "test:browser": "node verify-hosting.cjs --browser"
+  },
+  "engines": { "node": ">=22" }
+}

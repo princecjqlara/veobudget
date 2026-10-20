@@ -7,7 +7,7 @@
     "build": "node build.cjs",
     "dev": "node build.cjs && node preview.cjs",
     "preview": "node preview.cjs",
-    "test": "node verify-model.cjs",
+    "test": "node verify-model.cjs && node verify-formulas.cjs && node verify-projection.cjs && node verify-calendar.cjs",
     "test:hosting": "node verify-hosting.cjs",
     "test:browser": "node verify-hosting.cjs --browser"
   },

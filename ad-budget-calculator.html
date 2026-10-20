@@ -1,20 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-planner-profile="aggressive">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tomorrow's ad budget</title>
-  <style>
-    :root{color-scheme:light;--paper:#f5f4ed;--ink:#192f29;--muted:#627169;--line:#d9dfd3;--green:#234c3b;--soft:#e9efdf;--white:#fffef9}
-    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:1280px;margin:auto;padding:38px 32px}header{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:28px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--muted)}h1{font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.045em;margin:10px 0 12px}p{margin:8px 0}.sub{max-width:690px;color:var(--muted)}.tag{font-size:12px;background:var(--soft);border:1px solid var(--line);padding:8px 12px;border-radius:30px;white-space:nowrap}h2{font-size:20px;letter-spacing:-.025em;margin:0 0 18px}h3{font-size:14px;margin:0 0 10px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 355px;gap:24px;align-items:start}.panel{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:20px}fieldset{padding:0;margin:0 0 26px;border:0}fieldset:last-child{margin-bottom:0}legend{font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:14px;color:var(--muted)}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}label{display:block;font-size:13px;font-weight:600;min-width:0}input,select{font:inherit;display:block;width:100%;min-width:0;padding:11px;border-radius:8px;border:1px solid #bcc7b9;background:#fff;color:var(--ink);margin-top:7px}input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #80b8d3;outline-offset:2px}small{display:block;font-size:12px;line-height:1.45;color:var(--muted);font-weight:400;margin-top:5px}.summary{position:sticky;top:20px}.hero{background:var(--green);color:#f9fcf4;padding:26px;border-radius:18px}.hero .eyebrow{color:#c6dbc0}.budget{font-size:48px;font-weight:650;letter-spacing:-.05em;line-height:1.2;overflow-wrap:anywhere;margin:12px 0 7px;font-variant-numeric:tabular-nums}.hero .date{font-size:13px;color:#d2e0cf}.change{font-size:14px;margin:12px 0 20px;padding-bottom:20px;border-bottom:1px solid #52705c}.hero dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:12px;font-size:13px}.hero dt{color:#d2e0cf}.hero dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}.status{font-size:12px;letter-spacing:.06em;font-weight:700;text-transform:uppercase;display:inline-block;margin-top:22px}.explain{font-size:13px;margin-top:9px;color:#edf4e8}.action{padding:20px;background:var(--soft);border-radius:14px;margin-top:16px}.action p{font-size:13px}.metric-list{display:grid;grid-template-columns:1fr auto;gap:11px;font-size:13px;margin:0}.metric-list dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}.metric-list dt{color:var(--muted)}.capacity-value{font-size:30px;line-height:1.25;letter-spacing:-.035em;font-weight:650;margin:12px 0 4px;font-variant-numeric:tabular-nums}.capacity-context{font-size:12px;color:var(--muted);margin-bottom:18px}.capacity-bar{height:12px;border-radius:6px;overflow:hidden;background:#d4dfcb;margin:14px 0 6px}.capacity-bar span{display:block;height:100%;background:var(--green)}.capacity-legend{font-size:12px;color:var(--muted)}.error{border:1px solid #b45e39;background:#fff0e5;color:#7a2f16;padding:14px;border-radius:10px;margin-bottom:16px}.error[hidden]{display:none}details>summary{cursor:pointer;font-weight:650;font-size:14px;margin-left:16px}details[open]>summary{margin-bottom:22px}.advanced .fields{margin-bottom:18px}.note{font-size:12px;color:var(--muted);margin-top:14px}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th{font-size:11px;text-align:left;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}th,td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}th.num{white-space:normal}td:first-child,th:first-child{padding-left:0}td:last-child,th:last-child{padding-right:0}button{font:inherit;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--ink);padding:8px 12px;cursor:pointer;white-space:nowrap}button:hover{background:var(--soft)}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.rule{border-top:3px solid var(--green);padding-top:12px}.rule span{font-size:12px;color:var(--muted)}.rule strong{display:block;font-size:14px;margin-top:4px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.65;background:#f0f2e9;padding:18px;border-radius:10px;color:#253d31}.formulas p{font-size:13px}footer{font-size:12px;color:var(--muted);padding:4px 0 20px}a{color:#255a83}.empty{opacity:.55}#save-status,#copy-status{font-size:12px;color:var(--muted)}
-    @media(max-width:1000px){.layout{grid-template-columns:minmax(0,1fr) 310px}.budget{font-size:41px}}
-    @media(max-width:760px){main{padding:24px 18px}.layout{display:flex;flex-direction:column}.summary{position:static;width:100%;order:-1}.entry{width:100%}header{display:block}.tag{display:inline-block;margin-top:8px}.hero{padding:22px}.budget{font-size:44px}.panel{padding:20px}.rules{grid-template-columns:1fr;gap:12px}.examples th:nth-child(2),.examples td:nth-child(2),.examples th:nth-child(3),.examples td:nth-child(3){display:none}.examples th,.examples td{padding-left:6px;padding-right:6px}.examples button{padding:8px}}
-    @media(max-width:390px){.fields{grid-template-columns:1fr}.budget{font-size:38px}main{padding:20px 14px}}
-    @media print{body{background:white}main{padding:0}.summary{position:static}.layout{grid-template-columns:1fr 320px}.panel,.hero,.action{break-inside:avoid}button,.actions{display:none}.hero{color:var(--ink);background:var(--soft)}.hero *{color:var(--ink)!important}.table-wrap{overflow:visible}details:not([open]){display:none}}
-  </style>
+  <link rel="stylesheet" href="budget-planner.css">
 </head>
 <body>
 <main>
+  <nav class="planner-nav" aria-label="Budget planner pages"><a href="ad-budget-calculator.html" aria-current="page">Page 1 · Aggressive</a><a href="ad-budget-conservative.html">Page 2 · Conservative</a><a href="ad-budget-suno.html">Page 3 · Suno</a></nav>
   <header><div><div class="eyebrow">Aggressive growth planner</div><h1>Tomorrow's ad budget.</h1><p class="sub">Profit increases the budget. Projects per person adjust with the budget, while staying below the maximum you enter.</p><a href="#planner">Enter your numbers ↓</a></div><div class="tag">Editable example · PHP</div></header>
   <div id="errors" class="error" role="alert" hidden></div>
   <div class="layout">
@@ -23,7 +17,7 @@
         <fieldset><legend>01 / Budget</legend><div class="fields">
           <label>Today's ad budget<input id="currentBudget" name="currentBudget" type="number" min="0" step="any" required><small>The amount to increase or decrease.</small></label>
           <label>Starting daily budget<input id="startingBudget" name="startingBudget" type="number" min="0.01" step="any" required><small>Used when today's budget is zero.</small></label>
-          <label>Planning date<input id="planDate" name="planDate" type="date" required></label>
+          <div class="date-field"><span class="date-label">Today in the Philippines</span><time class="date-display" id="current-ph-date">—</time><small>Asia/Manila · UTC+8. Dates update automatically.</small></div>
           <label>Campaign day tomorrow<input id="day" name="day" type="number" min="1" step="1" required><small id="ramp-input-note"></small></label>
         </div></fieldset>
         <fieldset><legend>02 / Yesterday</legend><div class="fields">
@@ -60,11 +54,15 @@
       </div><p class="note">The base percentage step gets smaller at higher budgets. On Profit, a later campaign day raises the step and a larger team unlocks growth from unused capacity. Today's budget remains the base for tomorrow. The sales quota rounds budget ÷ CPA up to whole projects.</p></div>
     </div>
     <aside class="summary" aria-live="polite" aria-atomic="true">
-      <div class="hero"><div class="eyebrow">Tomorrow's recommended budget</div><div class="date" id="result-date"></div><div class="budget" id="result-budget">—</div><div class="change" id="result-change">Enter your inputs</div>
+      <div class="hero"><div class="eyebrow">Tomorrow's recommended budget</div><time class="date" id="result-date"></time><div class="budget" id="result-budget">—</div><div class="change" id="result-change">Enter your inputs</div>
         <div class="sales-quota" style="margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid #52705c"><div class="eyebrow">Project sales quota tomorrow</div><div id="result-quota" style="font-size:30px;font-weight:650;margin:7px 0">—</div><div id="result-quota-person" style="font-size:13px">—</div><p id="result-quota-reason" style="font-size:12px;color:#d2e0cf"></p></div>
-        <dl><dt>Yesterday's result</dt><dd id="result-outcome">—</dd><dt>Your CPA input</dt><dd id="result-cpa">—</dd><dt>Team boost on profit</dt><dd id="result-team-boost">—</dd><dt>Campaign day boost</dt><dd id="result-day-boost">—</dd><dt>Unused capacity allowance</dt><dd id="result-capacity-boost">—</dd><dt>Total budget increase / cut</dt><dd id="result-step">—</dd><dt>Applied multiplier</dt><dd id="result-multiplier">—</dd><dt>Budget before team limit</dt><dd id="result-candidate">—</dd></dl>
+        <dl><dt>Yesterday's result</dt><dd id="result-outcome">—</dd><dt>Your CPA input</dt><dd id="result-cpa">—</dd><dt>Team boost on profit</dt><dd id="result-team-boost">—</dd><dt>Campaign day boost</dt><dd id="result-day-boost">—</dd><dt>Unused capacity allowance</dt><dd id="result-capacity-boost">—</dd><dt>Total budget increase / cut</dt><dd id="result-step">—</dd><dt>Multiplier before limits</dt><dd id="result-multiplier">—</dd><dt>Budget before team limit</dt><dd id="result-candidate">—</dd></dl>
         <div class="status" id="result-status"></div><div class="explain" id="result-reason"></div>
       </div>
+      <section class="action budget-ceiling" aria-labelledby="budget-ceiling-title"><h3 id="budget-ceiling-title">Estimated budget where profit growth stops</h3><div class="capacity-value" id="result-max-budget">—</div><p class="capacity-context">The daily budget that stays flat even after more profitable days.</p>
+        <dl class="metric-list"><dt>Est. profitable days to max</dt><dd id="result-days-to-max">—</dd><dt>Est. date at max (PH)</dt><dd id="result-max-date">—</dd><dt>Projects at growth-stop budget</dt><dd id="result-max-projects">—</dd><dt>Next profitable day</dt><dd id="result-next-profit-budget">—</dd><dt>Team capacity ceiling</dt><dd id="result-capacity-ceiling">—</dd><dt>Current planning cap</dt><dd id="result-budget-ceiling">—</dd></dl>
+        <p id="result-ceiling-formula"></p><p id="result-ceiling-note"></p><p class="note">Assumes continued profit with unchanged team, CPA, growth, capacity, and rounding settings; only campaign age advances. This is a conditional projection, not a guarantee of profitable results.</p>
+      </section>
       <div class="action"><h3>Automatic projects per person</h3><div class="capacity-value" id="result-per-person">—</div><div class="capacity-context" id="result-capacity-context"></div>
         <dl class="metric-list"><dt>Your maximum / person</dt><dd id="result-max">—</dd><dt>Upper limit with reserve</dt><dd id="result-safe-max">—</dd><dt>Team capacity / day</dt><dd id="result-capacity">—</dd><dt>Estimated new projects at CPA</dt><dd id="result-acquisitions">—</dd><dt>Average quota / person</dt><dd id="result-workload">—</dd></dl>
         <div class="capacity-bar" role="img" aria-label="Automatically planned capacity below your maximum"><span id="bar-capacity"></span></div><div class="capacity-legend" id="result-reserve"></div><p id="result-capacity-action"></p>
@@ -75,227 +73,7 @@
   <section class="panel formulas"><details><summary>Copyable formulas</summary><p>Use the named inputs below. Percentage values in formulas are decimals: 10% = 0.10. One acquisition represents one project.</p><pre id="formula-text"></pre><button type="button" id="copy-formulas">Copy formulas</button><span id="copy-status" role="status"></span></details></section>
   <footer><p>Sample amounts are in Philippine pesos. Yesterday's CPA is used as the planning estimate for tomorrow; actual acquisitions may differ. This calculator recommends a budget and team workload.</p></footer>
 </main>
-<script id="budget-model">
-(function(root){
-  'use strict';
-  const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
-  const localDate=[tomorrow.getFullYear(),String(tomorrow.getMonth()+1).padStart(2,'0'),String(tomorrow.getDate()).padStart(2,'0')].join('-');
-  const defaults={planDate:localDate,day:1,startingBudget:2000,currentBudget:2800,yesterdayResult:'PROFIT',yesterdayCPA:400,activePeople:5,maxPerPerson:3.5,baseStepPct:100,minStepPct:10,maxStepPct:80,taperBudget:2000,peopleBoostPct:2,maxPeopleBoostPct:25,profitLiftPct:10,dayBoostPct:5,maxDayBoostPct:100,capacityFillPct:15,reservePct:10,headroomPct:10,rampPerPerson:0.8,rampDays:3,rounding:10};
-  const textFields=['planDate','yesterdayResult'];
-  const labels={day:'Campaign day',startingBudget:'Starting budget',currentBudget:"Today's budget",yesterdayCPA:"Yesterday's CPA",activePeople:'Active people',maxPerPerson:'Maximum projects per person',baseStepPct:'Base budget step',minStepPct:'Smallest step',maxStepPct:'Largest step',taperBudget:'Taper scale',peopleBoostPct:'Boost per extra person',maxPeopleBoostPct:'Maximum team boost',profitLiftPct:'Extra profit step',dayBoostPct:'Boost per campaign day',maxDayBoostPct:'Maximum campaign day boost',capacityFillPct:'Unused capacity growth',reservePct:'Capacity reserve',headroomPct:'Workload buffer',rampPerPerson:'Starting projects per person',rampDays:'Starting period',rounding:'Rounding unit'};
-  const clamp=(value,low,high)=>Math.min(high,Math.max(low,value));
-  function validate(p){
-    const errors=[];
-    for(const key of Object.keys(defaults)){
-      if(textFields.includes(key))continue;
-      if(!Number.isFinite(p[key])||p[key]<0)errors.push(labels[key]+' must be a nonnegative number.');
-    }
-    for(const key of ['startingBudget','yesterdayCPA','maxPerPerson','taperBudget','rampPerPerson','rounding'])if(p[key]===0)errors.push(labels[key]+' must be greater than zero.');
-    for(const key of ['day','activePeople','rampDays'])if(Number.isFinite(p[key])&&!Number.isInteger(p[key]))errors.push(labels[key]+' must be a whole number.');
-    if(p.day<1)errors.push('Campaign day must be at least 1.');
-    if(!['PROFIT','BREAK-EVEN','LOSS'].includes(p.yesterdayResult))errors.push('Choose Profit, Break-even or Loss.');
-    if(!/^\d{4}-\d{2}-\d{2}$/.test(p.planDate||'')||Number.isNaN(Date.parse(p.planDate+'T12:00:00')))errors.push('Enter a valid planning date.');
-    if(p.minStepPct>p.maxStepPct||p.maxStepPct>=100)errors.push('Budget steps need 0 ≤ minimum ≤ maximum < 100%.');
-    if(p.baseStepPct>200)errors.push('Base budget step cannot exceed 200%.');
-    if(p.reservePct<1||p.reservePct>99)errors.push('Keep a reserve between 1% and 99% below your maximum.');
-    if(p.headroomPct>100)errors.push('Workload buffer cannot exceed 100%.');
-    if(p.peopleBoostPct>10||p.maxPeopleBoostPct>50)errors.push('Keep the per-person boost at most 10% and the maximum team boost at most 50%.');
-    if(p.profitLiftPct>50)errors.push('Extra profit step cannot exceed 50%.');
-    if(p.dayBoostPct>20||p.maxDayBoostPct>200)errors.push('Keep the daily boost at most 20% and its maximum at most 200%.');
-    if(p.capacityFillPct>50)errors.push('Unused capacity growth cannot exceed 50%.');
-    return [...new Set(errors)];
-  }
-  function calculate(p){
-    const errors=validate(p);if(errors.length)return {errors};
-    const referenceBudget=p.currentBudget>0?p.currentBudget:p.startingBudget;
-    const baseStep=clamp((p.baseStepPct/100)/(1+referenceBudget/p.taperBudget),p.minStepPct/100,p.maxStepPct/100);
-    const outcome=p.yesterdayResult;
-    const teamBoost=outcome==='PROFIT'?Math.min(p.maxPeopleBoostPct/100,Math.max(0,p.activePeople-1)*p.peopleBoostPct/100):0;
-    const profitLift=outcome==='PROFIT'?1+p.profitLiftPct/100:1;
-    const dayBoost=outcome==='PROFIT'?Math.min(p.maxDayBoostPct/100,(p.day-1)*p.dayBoostPct/100):0;
-    const performanceStep=baseStep*(1+teamBoost)*profitLift*(1+dayBoost);
-    const safeMax=p.maxPerPerson*(1-p.reservePct/100);
-    const baselinePerPerson=Math.min(p.rampPerPerson,safeMax);
-    const inRamp=p.day<=p.rampDays;
-    // A profitable result can expand starting capacity to support growth.
-    // The user's maximum minus the reserve remains the spending ceiling.
-    const rampHeld=inRamp&&outcome!=='PROFIT';
-    const allowedPerPerson=rampHeld?baselinePerPerson:safeMax;
-    const wholeProjectCapacity=Math.max(0,Math.floor(p.activePeople*allowedPerPerson+1e-9));
-    const budgetLimit=wholeProjectCapacity*p.yesterdayCPA;
-    const unusedCapacityBudget=Math.max(0,budgetLimit-referenceBudget);
-    const capacityAddition=outcome==='PROFIT'?unusedCapacityBudget*p.capacityFillPct/100:0;
-    const step=performanceStep+capacityAddition/referenceBudget;
-    const multiplier=outcome==='PROFIT'?1+step:outcome==='BREAK-EVEN'?1-step:(1-step)**2;
-    const candidate=referenceBudget*multiplier;
-    const rawBudget=Math.max(0,Math.min(candidate,budgetLimit));
-    const budget=Math.floor((rawBudget+1e-9)/p.rounding)*p.rounding;
-    const acquisitions=budget/p.yesterdayCPA;
-    const teamQuota=Math.ceil(Math.round(acquisitions*1e8)/1e8);
-    const quotaPerPerson=p.activePeople>0?teamQuota/p.activePeople:0;
-    const workloadPerPerson=p.activePeople>0?acquisitions/p.activePeople:0;
-    const plannedPerPerson=p.activePeople===0?0:rampHeld?baselinePerPerson:Math.min(safeMax,Math.max(baselinePerPerson,quotaPerPerson*(1+p.headroomPct/100)));
-    const capacity=p.activePeople*plannedPerPerson;
-    const limited=budgetLimit<candidate-1e-7;
-    const growthQuota=Math.ceil(Math.round(candidate/p.yesterdayCPA*1e8)/1e8);
-    const neededPeople=Math.ceil(growthQuota/allowedPerPerson-1e-9);
-    return {errors:[],outcome,referenceBudget,baseStep,teamBoost,dayBoost,performanceStep,unusedCapacityBudget,capacityAddition,step,multiplier,candidate,safeMax,baselinePerPerson,inRamp,rampHeld,allowedPerPerson,wholeProjectCapacity,budgetLimit,budget,acquisitions,teamQuota,quotaPerPerson,workloadPerPerson,plannedPerPerson,capacity,limited,neededPeople};
-  }
-  function migrateInputs(saved){
-    const p={...defaults};if(!saved||typeof saved!=='object')return p;
-    const isCurrent=Object.hasOwn(saved,'maxPerPerson')&&Object.hasOwn(saved,'yesterdayCPA');
-    const keys=isCurrent?Object.keys(defaults):['planDate','day','startingBudget','currentBudget','yesterdayResult','activePeople'];
-    for(const key of keys)if(Object.hasOwn(saved,key))p[key]=saved[key];
-    if(!isCurrent){
-      if(Number.isFinite(saved.perPerson)&&saved.perPerson>0)p.maxPerPerson=saved.perPerson;
-      if(Number.isFinite(saved.baselineCPA)&&saved.baselineCPA>0)p.yesterdayCPA=saved.baselineCPA;
-    }
-    return p;
-  }
-  const scenarios=[
-    {name:'Profit · grow aggressively',patch:{}},
-    {name:'Break-even · down 1 step',patch:{yesterdayResult:'BREAK-EVEN'}},
-    {name:'Loss · down 2 steps',patch:{yesterdayResult:'LOSS'}},
-    {name:'₱1,000 · low workload',patch:{currentBudget:1000}},
-    {name:'₱5,000 · capacity rises',patch:{currentBudget:5000}},
-    {name:'₱10,000 · below maximum',patch:{currentBudget:10000}},
-    {name:'Day 2 · profit grows capacity',patch:{day:2}},
-    {name:'5 people · day 1 profit',patch:{currentBudget:2800,startingBudget:2000,day:1,activePeople:5,maxPerPerson:3.5,yesterdayCPA:400}},
-    {name:'10 people · extra growth',patch:{currentBudget:2800,startingBudget:2000,day:1,activePeople:10,maxPerPerson:3.5,yesterdayCPA:400}},
-    {name:'5 people · campaign day 5',patch:{currentBudget:2800,startingBudget:2000,day:5,activePeople:5,maxPerPerson:3.5,yesterdayCPA:400}},
-    {name:'5 people · campaign day 10',patch:{currentBudget:2800,startingBudget:2000,day:10,activePeople:5,maxPerPerson:3.5,yesterdayCPA:400}}
-  ];
-  const formulas=`INPUTS (default values)
-TodayBudget = 2800         StartingBudget = 2000
-YesterdayResult = "PROFIT"  (or "BREAK-EVEN" / "LOSS")
-YesterdayCPA = 400         ActivePeople = 5
-MaxPerPerson = 3.5         TomorrowDay = 1
-
-SETTINGS
-BaseStep = 100%            MinStep = 10%       MaxStep = 80%
-TaperScale = 2000          Reserve = 10%       Headroom = 10%
-BoostPerPerson = 2%        MaxTeamBoost = 25%
-ExtraProfitStep = 10%
-DayBoostRate = 5%          MaxDayBoost = 100%   CapacityFill = 15%
-StartPerPerson = 0.8       RampDays = 3        RoundUnit = 10
-
-BUDGET FORMULA
-ReferenceBudget = IF(TodayBudget>0,TodayBudget,StartingBudget)
-BaseStepRate = MAX(MinStep,MIN(MaxStep,BaseStep/(1+ReferenceBudget/TaperScale)))
-TeamBoost = IF(YesterdayResult="PROFIT",MIN(MaxTeamBoost,MAX(0,ActivePeople-1)*BoostPerPerson),0)
-ProfitLift = IF(YesterdayResult="PROFIT",1+ExtraProfitStep,1)
-DayBoost = IF(YesterdayResult="PROFIT",MIN(MaxDayBoost,MAX(0,TomorrowDay-1)*DayBoostRate),0)
-PerformanceStep = BaseStepRate*(1+TeamBoost)*ProfitLift*(1+DayBoost)
-SafeMax = MaxPerPerson*(1-Reserve)
-Baseline = MIN(StartPerPerson,SafeMax)
-HoldStartingCapacity = AND(TomorrowDay<=RampDays,YesterdayResult<>"PROFIT")
-AllowedPerPerson = IF(HoldStartingCapacity,Baseline,SafeMax)
-WholeProjectCapacity = ROUNDDOWN(ROUND(ActivePeople*AllowedPerPerson,8),0)
-TeamBudgetLimit = WholeProjectCapacity*YesterdayCPA
-UnusedCapacityBudget = MAX(0,TeamBudgetLimit-ReferenceBudget)
-CapacityAddition = IF(YesterdayResult="PROFIT",UnusedCapacityBudget*CapacityFill,0)
-Step = PerformanceStep+CapacityAddition/ReferenceBudget
-Multiplier = IF(YesterdayResult="PROFIT",1+Step,IF(YesterdayResult="BREAK-EVEN",1-Step,(1-Step)^2))
-GrowthBudget = ReferenceBudget*Multiplier
-TomorrowBudget = FLOOR(MAX(0,MIN(GrowthBudget,TeamBudgetLimit)),RoundUnit)
-
-AUTOMATIC CAPACITY FORMULA
-ExpectedProjects = TomorrowBudget/YesterdayCPA
-WorkloadPerPerson = IF(ActivePeople>0,ExpectedProjects/ActivePeople,0)
-TeamSalesQuota = ROUNDUP(ROUND(ExpectedProjects,8),0)
-AverageQuotaPerPerson = IF(ActivePeople>0,TeamSalesQuota/ActivePeople,0)
-PlannedPerPerson = IF(ActivePeople=0,0,IF(HoldStartingCapacity,Baseline,MIN(SafeMax,MAX(Baseline,AverageQuotaPerPerson*(1+Headroom)))))
-TeamCapacity = ActivePeople*PlannedPerPerson
-PeopleForFullGrowth = ROUNDUP(ROUNDUP(ROUND(GrowthBudget/YesterdayCPA,8),0)/AllowedPerPerson,0)
-
-Capacity is calculated from the recommended budget and your CPA.
-Profit can increase capacity from the starting level on any campaign day.
-Campaign day means age: it boosts one profit step from today's budget.
-The unused capacity allowance expands with team size and falls as capacity fills.
-The full maximum is never used: Reserve must stay between 1% and 99%.
-Zero active people gives a zero ad budget. CPA and maximum capacity must be positive.
-Capacity and estimated projects may be fractional averages across the team.`;
-  root.BudgetModel={defaults,textFields,calculate,validate,migrateInputs,scenarios,formulas};
-})(globalThis);
-</script>
-<script>
-(function(){
-  'use strict';
-  const {defaults,textFields,calculate,migrateInputs,scenarios,formulas}=BudgetModel;
-  const form=document.getElementById('planner'),el=id=>document.getElementById(id);
-  const money=value=>'₱'+value.toLocaleString('en-PH',{maximumFractionDigits:0});
-  const preciseMoney=value=>'₱'+value.toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
-  const pct=value=>(value*100).toLocaleString('en-PH',{maximumFractionDigits:1})+'%';
-  const number=value=>value.toLocaleString('en-PH',{maximumFractionDigits:4});
-  const multiplierText=value=>value.toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:4})+'×';
-  const outcomeText=value=>value==='PROFIT'?'Profit':value==='LOSS'?'Loss':'Break-even';
-  function setInputs(p){for(const key of Object.keys(defaults))el(key).value=p[key];}
-  function getInputs(){const p={};for(const key of Object.keys(defaults)){const value=el(key).value;p[key]=textFields.includes(key)?value:value.trim()===''?NaN:Number(value);}return p;}
-  function render(){
-    const p=getInputs(),r=calculate(p);
-    el('errors').hidden=!r.errors.length;el('errors').textContent=r.errors.join(' ');
-    document.querySelector('.summary').classList.toggle('empty',r.errors.length>0);
-    if(r.errors.length){
-      for(const target of document.querySelectorAll('.summary dd'))target.textContent='—';
-      for(const id of ['result-budget','result-per-person','result-quota'])el(id).textContent='—';
-      for(const id of ['result-date','result-reason','result-capacity-context','result-capacity-action','result-reserve','result-quota-person','result-quota-reason'])el(id).textContent='';
-      el('result-change').textContent='Correct the inputs to calculate.';el('result-status').textContent='Invalid inputs';el('bar-capacity').style.width='0%';window.currentBudgetResult=null;return;
-    }
-    el('ramp-input-note').textContent='On Profit, each day after day 1 adds '+p.dayBoostPct+'% to the profit step (maximum '+p.maxDayBoostPct+'% boost). Today’s budget stays the base.';
-    el('result-date').textContent=new Date(p.planDate+'T12:00:00').toLocaleDateString('en-PH',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-    el('result-budget').textContent=money(r.budget);
-    const change=r.budget-p.currentBudget;
-    el('result-change').textContent=p.currentBudget>0?(change>=0?'+':'−')+money(Math.abs(change))+' / '+(change>=0?'+':'−')+pct(Math.abs(change/p.currentBudget))+" vs today's budget":'Based on your starting budget';
-    el('result-outcome').textContent=outcomeText(r.outcome);
-    el('result-cpa').textContent=preciseMoney(p.yesterdayCPA);
-    el('result-team-boost').textContent=r.teamBoost>0?'+'+pct(r.teamBoost)+' of base step':'None';
-    el('result-day-boost').textContent=r.dayBoost>0?'+'+pct(r.dayBoost)+' on profit step':'None';
-    el('result-capacity-boost').textContent=money(r.capacityAddition);
-    el('result-step').textContent=pct(r.step);
-    el('result-multiplier').textContent=multiplierText(r.multiplier);
-    el('result-candidate').textContent=money(r.candidate);
-    el('result-quota').textContent=number(r.teamQuota)+' '+(r.teamQuota===1?'project':'projects');
-    el('result-quota-person').textContent=number(r.quotaPerPerson)+' projects per person on average';
-    el('result-quota-reason').textContent=r.teamQuota>0?'Reach this quota to keep CPA at or below '+preciseMoney(p.yesterdayCPA)+'.':'Zero ad budget: no project sales quota.';
-    el('result-status').textContent=r.outcome+(r.limited?' / team limit':' / '+(r.outcome==='PROFIT'?'grow':'reduce'));
-    const rule=r.outcome==='PROFIT'?'Profit: increase one '+pct(r.step)+' step.':r.outcome==='BREAK-EVEN'?'Break-even: reduce one '+pct(r.step)+' step.':'Loss: apply two successive '+pct(r.step)+' reductions.';
-    el('result-reason').textContent=rule+(r.limited?' The team limit keeps projects per person below your maximum.':' Capacity adjusts to cover this budget.');
-    el('result-per-person').textContent=number(r.plannedPerPerson)+' projects / day';
-    el('result-capacity-context').textContent=r.rampHeld?'Starting period: capacity stays at the starting level.':r.inRamp?'Profit allows capacity to rise from the starting level to support growth.':'Automatically adjusted from tomorrow’s budget and your CPA.';
-    el('result-max').textContent=number(p.maxPerPerson);
-    el('result-safe-max').textContent=number(r.safeMax);
-    el('result-capacity').textContent=number(r.capacity);
-    el('result-acquisitions').textContent=number(r.acquisitions);
-    el('result-workload').textContent=number(r.quotaPerPerson);
-    el('bar-capacity').style.width=(100*r.plannedPerPerson/p.maxPerPerson)+'%';
-    el('result-reserve').textContent=p.reservePct+'% reserve below your maximum.';
-    el('result-capacity-action').textContent=r.limited?'To support the full '+money(r.candidate)+' growth budget, schedule '+r.neededPeople+' active people ('+Math.max(0,r.neededPeople-p.activePeople)+' more). The recommendation uses the '+p.activePeople+' people you entered.':'Your '+p.activePeople+' active people can cover the estimated workload at the automatically planned capacity.';
-    window.currentBudgetResult={inputs:p,result:r};
-  }
-  setInputs(defaults);
-  try{
-    const saved=JSON.parse(localStorage.getItem('tomorrow-ad-budget-v3')||localStorage.getItem('tomorrow-ad-budget-v2')||localStorage.getItem('tomorrow-ad-budget-v1'));
-    if(saved){const p=migrateInputs(saved);if(calculate(p).errors.length===0){setInputs(p);el('save-status').textContent='Saved inputs loaded.';}}
-  }catch{}
-  // Allow an example to open with its input values without overwriting saved inputs.
-  try{
-    const params=new URLSearchParams(location.search),p=getInputs();let changed=false;
-    for(const key of Object.keys(defaults))if(params.has(key)){const value=params.get(key);p[key]=textFields.includes(key)?value:value.trim()===''?NaN:Number(value);changed=true;}
-    if(changed&&calculate(p).errors.length===0){setInputs(p);el('save-status').textContent='Your example inputs loaded.';}
-  }catch{}
-  form.addEventListener('input',render);form.addEventListener('change',render);form.addEventListener('submit',event=>event.preventDefault());
-  el('save').addEventListener('click',()=>{const p=getInputs();if(calculate(p).errors.length){el('save-status').textContent='Correct the inputs first.';return;}try{localStorage.setItem('tomorrow-ad-budget-v3',JSON.stringify(p));el('save-status').textContent='Saved on this device.';}catch{el('save-status').textContent='This browser could not save inputs.';}});
-  el('reset').addEventListener('click',()=>{setInputs(defaults);try{for(const key of ['tomorrow-ad-budget-v3','tomorrow-ad-budget-v2','tomorrow-ad-budget-v1'])localStorage.removeItem(key);}catch{}el('save-status').textContent='Default settings loaded.';render();});
-  scenarios.forEach((scenario,index)=>{
-    const p={...defaults,...scenario.patch},r=calculate(p),row=document.createElement('tr');
-    for(const [text,numeric]of [[scenario.name,false],[outcomeText(r.outcome),true],[multiplierText(r.multiplier),true],[number(r.teamQuota),true],[money(r.budget),true]]){const cell=document.createElement('td');cell.textContent=text;if(numeric)cell.className='num';row.appendChild(cell);}
-    const cell=document.createElement('td'),button=document.createElement('button');button.type='button';button.textContent='Load';button.dataset.scenario=String(index);button.setAttribute('aria-label','Load '+scenario.name);
-    button.addEventListener('click',()=>{setInputs(p);render();el('save-status').textContent='Scenario loaded: '+scenario.name;form.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});cell.appendChild(button);row.appendChild(cell);el('scenarios').appendChild(row);
-  });
-  el('formula-text').textContent=formulas;
-  el('copy-formulas').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(formulas);el('copy-status').textContent=' Copied.';}catch{el('copy-status').textContent=' Select and copy the formulas above.';}});
-  render();
-})();
-</script>
+<script id="budget-model" src="budget-model.js"></script>
+<script src="budget-planner.js"></script>
 </body>
 </html>

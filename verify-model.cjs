@@ -2,11 +2,14 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const path = require('node:path');
-const html = fs.readFileSync(path.join(__dirname,'ad-budget-calculator.html'),'utf8');
-const sandbox = {};
-vm.createContext(sandbox);
-vm.runInContext(html.match(/<script id="budget-model">([\s\S]*?)<\/script>/)[1],sandbox);
-const {defaults,calculate,migrateInputs,scenarios}=sandbox.BudgetModel;
+const modelSource = fs.readFileSync(path.join(__dirname,'budget-model.js'),'utf8');
+function loadModel(profile='aggressive',plannerId=profile){
+  const sandbox={document:{documentElement:{dataset:{plannerProfile:profile,plannerId}}}};
+  vm.createContext(sandbox);
+  vm.runInContext(modelSource,sandbox);
+  return sandbox.BudgetModel;
+}
+const {defaults,calculate,migrateInputs,scenarios}=loadModel();
 // Keep the established calculation scenarios independent of the visitor defaults.
 const fixture={...defaults,currentBudget:2000,day:4,activePeople:10,maxPerPerson:3};
 const run=patch=>calculate({...fixture,...patch});
@@ -118,7 +121,99 @@ for(const activePeople of [1,2,3,4,5,10,14,20]){
   assert.ok(r.budget>=previousBudget,'More active people must not reduce a profitable budget');checks++;
   previousBudget=r.budget;
 }
+const conservative=loadModel('conservative');
+const conservativeDefault=conservative.calculate(conservative.defaults);
+assert.equal(conservative.profile,'conservative');checks++;
+assert.equal(loadModel().profile,'aggressive');checks++;
+assert.equal(loadModel('unknown').profile,'aggressive');checks++;
+near(conservative.defaults.maxPerPerson,1.6,'Page 2 starts at the editable maximum of 1.6');
+near(conservativeDefault.budget,2400,'Conservative defaults respect the lower capacity ceiling');
+near(conservativeDefault.teamQuota,6,'Conservative defaults show a six-project quota');
+near(conservativeDefault.quotaPerPerson,1.2,'Conservative quota averages 1.2 projects per person');
+near(conservativeDefault.plannedPerPerson,1.28,'Conservative capacity keeps its reserve when the workload buffer is capped');
+near(conservativeDefault.capacityAddition,0,'No unused-capacity allowance is added above the team ceiling');
+near(conservativeDefault.safeMax,1.28,'Conservative capacity keeps a twenty percent reserve');
+near(conservativeDefault.maximumTeamProjects,6,'Capacity ceiling rounds down to whole projects');
+near(conservativeDefault.maximumDailyBudget,2400,'Estimated maximum daily budget uses reserved capacity and CPA');
+near(conservativeDefault.currentBudgetCeiling,2400,'Profitable planning can use the full reserved ceiling');
+near(conservativeDefault.baseStep,6/43,'Conservative base step independently simplifies to 6/43');
+near(conservativeDefault.performanceStep,156/1075,'Conservative performance step includes a four percent team boost');
+near(conservativeDefault.changeRate,-1/7,'Capacity can reduce a profitable recommendation when the current budget is already too high');
+const conservativeLoss=conservative.calculate({...conservative.defaults,yesterdayResult:'LOSS'});
+near(conservativeLoss.multiplier,(37/43)**2,'Loss compounds two base-step reductions');
+near(conservativeLoss.budget,1200,'Starting-period capacity can override the loss percentage');
+near(conservativeLoss.changeRate,-4/7,'Final loss change includes the starting-period cap');
+near(conservativeLoss.maximumDailyBudget,2400,'Maximum team ceiling is independent of the latest result');
+near(conservativeLoss.currentBudgetCeiling,1200,'Current planning ceiling reflects the starting-period restriction');
+const conservativeLaterLoss=conservative.calculate({...conservative.defaults,yesterdayResult:'LOSS',day:8});
+near(conservativeLaterLoss.budget,2070,'Loss after the starting period follows compounded reductions and rounding');
+near(conservativeLaterLoss.changeRate,2070/2800-1,'Final loss change includes both reductions');
+near(conservative.calculate({...conservative.defaults,maxPerPerson:3.5,rounding:.01}).budget,3290.32,'The editable maximum can unlock a larger budget with cent-level rounding');
+for(const [patch,expected] of [[{activePeople:0},0],[{activePeople:10},4800],[{yesterdayCPA:200},1200],[{maxPerPerson:3.5},5600],[{reservePct:50},1600],[{rounding:700},2100]]){
+  near(conservative.calculate({...conservative.defaults,...patch}).maximumDailyBudget,expected,'Budget ceiling updates with '+JSON.stringify(patch));
+}
+for(const patch of [{currentBudget:100},{day:100},{baseStepPct:200},{headroomPct:100},{yesterdayResult:'BREAK-EVEN'},{yesterdayResult:'LOSS'}]){
+  near(conservative.calculate({...conservative.defaults,...patch}).maximumDailyBudget,2400,'Growth rules and fitted headroom do not raise the reserved capacity ceiling');
+}
+assert.ok(conservative.calculate({...conservative.defaults,activePeople:1e308}).errors.length>0,'Overflow must not produce a NaN recommendation');checks++;
+assert.ok(conservative.calculate({...conservative.defaults,yesterdayCPA:1e308}).errors.length>0,'Overflow in the spending ceiling must be rejected');checks++;
+for(const key of ['currentBudget','startingBudget','yesterdayCPA','activePeople','day','rounding']){
+  assert.equal(conservative.defaults[key],defaults[key],'Business inputs stay comparable: '+key);checks++;
+}
+for(const key of ['baseStepPct','minStepPct','maxStepPct','taperBudget','peopleBoostPct','maxPeopleBoostPct','profitLiftPct','dayBoostPct','maxDayBoostPct','capacityFillPct','rampPerPerson']){
+  assert.ok(conservative.defaults[key]<defaults[key],'Conservative growth setting is lower: '+key);checks++;
+}
+for(const key of ['reservePct','headroomPct','rampDays']){
+  assert.ok(conservative.defaults[key]>defaults[key],'Conservative protection setting is higher: '+key);checks++;
+}
+assert.equal(conservative.storageKeys.length,1);checks++;
+assert.ok(conservative.storageKeys.every(key=>!loadModel().storageKeys.includes(key)),'Profiles must not share saved inputs');checks++;
+assert.match(conservative.formulas,/BaseStep = 40%/);checks++;
+assert.match(conservative.formulas,/Reserve = 20%/);checks++;
+assert.match(conservative.formulas,/RampDays = 7/);checks++;
+assert.match(conservative.formulas,/MaxPerPerson = 1.6/);checks++;
+assert.match(loadModel().formulas,/BaseStep = 100%/);checks++;
+assert.equal(conservative.migrateInputs({currentBudget:5000}).baseStepPct,40,'Partial saves inherit the selected profile');checks++;
+near(conservative.migrateInputs({...conservative.defaults,maxPerPerson:2.2}).maxPerPerson,2.2,'Saved custom capacity remains editable and is not overwritten');
+near(conservative.calculate({...conservative.defaults,day:100}).dayBoost,.2,'Conservative day boost is capped');
+near(conservative.calculate({...conservative.defaults,activePeople:100}).teamBoost,.1,'Conservative team boost is capped');
+near(conservative.calculate({...conservative.defaults,day:7,yesterdayResult:'BREAK-EVEN'}).plannedPerPerson,.6,'Conservative starting period protects capacity for seven days');
+assert.equal(conservative.calculate({...conservative.defaults,day:8,yesterdayResult:'BREAK-EVEN'}).rampHeld,false);checks++;
+for(const currentBudget of [0,500,2800,10000,100000])for(const activePeople of [0,1,5,10])for(const yesterdayCPA of [100,400])for(const yesterdayResult of ['PROFIT','BREAK-EVEN','LOSS'])for(const day of [1,7,8,100]){
+  const inputs={...conservative.defaults,currentBudget,activePeople,yesterdayCPA,yesterdayResult,day};
+  const result=conservative.calculate(inputs);
+  assert.equal(result.errors.length,0);
+  assert.ok(Number.isFinite(result.budget)&&result.budget>=0);
+  assert.ok(result.budget<=result.candidate+1e-7);
+  assert.ok(result.budget<=result.budgetLimit+1e-7);
+  assert.ok(result.plannedPerPerson<inputs.maxPerPerson);
+  assert.ok(result.plannedPerPerson<=result.safeMax+1e-7);
+  assert.ok(Number.isInteger(result.teamQuota)&&result.teamQuota>=result.acquisitions-1e-7);
+  assert.ok(result.teamQuota<=result.capacity+1e-7);
+  assert.ok(result.teamQuota<=result.wholeProjectCapacity);
+  assert.ok(result.budget<=result.currentBudgetCeiling+1e-7);
+  assert.ok(result.currentBudgetCeiling<=result.maximumDailyBudget+1e-7);
+  if(yesterdayResult==='PROFIT')assert.ok(result.budget<=calculate({...defaults,currentBudget,activePeople,yesterdayCPA,yesterdayResult,day}).budget,'Conservative profit never outgrows Page 1 for matching inputs');
+  checks+=11;
+}
+for(const scenario of conservative.scenarios){
+  assert.equal(conservative.calculate({...conservative.defaults,...scenario.patch}).errors.length,0);checks++;
+  assert.equal(scenario.patch.maxPerPerson??conservative.defaults.maxPerPerson,1.6,'Page 2 examples retain the new capacity default');checks++;
+}
+const suno=loadModel('aggressive','suno');
+assert.equal(suno.profile,'aggressive');checks++;
+assert.equal(JSON.stringify(suno.defaults),JSON.stringify(defaults),'Suno defaults must exactly match Page 1');checks++;
+assert.equal(suno.formulas,loadModel().formulas,'Suno formulas must exactly match Page 1');checks++;
+assert.equal(JSON.stringify(suno.scenarios),JSON.stringify(scenarios),'Suno scenarios must exactly match Page 1');checks++;
+assert.equal(suno.storageKeys.length,1);checks++;
+assert.ok(suno.storageKeys.every(key=>!loadModel().storageKeys.includes(key)&&!conservative.storageKeys.includes(key)),'Suno saves must stay separate from both existing pages');checks++;
+near(suno.calculate(suno.defaults).budget,4660,'Suno starts with the Page 1 budget');
+near(suno.calculate(suno.defaults).teamQuota,12,'Suno starts with the Page 1 quota');
+for(const currentBudget of [0,1000,2800,10000])for(const activePeople of [0,1,5,10])for(const yesterdayCPA of [200,400])for(const yesterdayResult of ['PROFIT','BREAK-EVEN','LOSS'])for(const day of [1,4,100]){
+  const inputs={...defaults,currentBudget,activePeople,yesterdayCPA,yesterdayResult,day};
+  assert.equal(JSON.stringify(suno.calculate(inputs)),JSON.stringify(calculate(inputs)),'Suno calculations must exactly match Page 1');checks++;
+}
 const rows=scenarios.map(s=>{const r=calculate({...defaults,...s.patch});return {name:s.name,result:r.outcome,multiplier:r.multiplier,teamBoost:r.teamBoost,budget:r.budget,projectsPerPerson:r.plannedPerPerson,estimatedProjects:r.acquisitions,teamQuota:r.teamQuota,averageQuota:r.quotaPerPerson,teamCapacity:r.capacity};});
 fs.mkdirSync(path.join(__dirname,'.qa'),{recursive:true});
 fs.writeFileSync(path.join(__dirname,'.qa','verified-scenarios.json'),JSON.stringify(rows,null,2));
-console.log(JSON.stringify({checks,scenarios:rows},null,2));
+console.log(JSON.stringify({checks,conservativeDefault:{budget:conservativeDefault.budget,teamQuota:conservativeDefault.teamQuota,quotaPerPerson:conservativeDefault.quotaPerPerson},scenarios:rows},null,2));

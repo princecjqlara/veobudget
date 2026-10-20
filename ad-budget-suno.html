@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-planner-profile="aggressive" data-planner-id="suno">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suno ad budget</title>
+  <link rel="stylesheet" href="budget-planner.css">
+</head>
+<body>
+<main>
+  <nav class="planner-nav" aria-label="Budget planner pages"><a href="ad-budget-calculator.html">Page 1 · Aggressive</a><a href="ad-budget-conservative.html">Page 2 · Conservative</a><a href="ad-budget-suno.html" aria-current="page">Page 3 · Suno</a></nav>
+  <header><div><div class="eyebrow">Suno growth planner</div><h1>Suno ad budget.</h1><p class="sub">Profit increases the budget. Projects per person adjust with the budget, while staying below the maximum you enter.</p><p class="profile-note">Same starting settings and formulas as Page 1, with separate saved inputs for Suno.</p><a href="#planner">Enter your numbers ↓</a></div><div class="tag">Suno · Aggressive · PHP</div></header>
+  <div id="errors" class="error" role="alert" hidden></div>
+  <div class="layout">
+    <div class="entry">
+      <form id="planner" class="panel" autocomplete="off">
+        <fieldset><legend>01 / Budget</legend><div class="fields">
+          <label>Today's ad budget<input id="currentBudget" name="currentBudget" type="number" min="0" step="any" required><small>The amount to increase or decrease.</small></label>
+          <label>Starting daily budget<input id="startingBudget" name="startingBudget" type="number" min="0.01" step="any" required><small>Used when today's budget is zero.</small></label>
+          <div class="date-field"><span class="date-label">Today in the Philippines</span><time class="date-display" id="current-ph-date">—</time><small>Asia/Manila · UTC+8. Dates update automatically.</small></div>
+          <label>Campaign day tomorrow<input id="day" name="day" type="number" min="1" step="1" required><small id="ramp-input-note"></small></label>
+        </div></fieldset>
+        <fieldset><legend>02 / Yesterday</legend><div class="fields">
+          <label>Yesterday's result<select id="yesterdayResult" name="yesterdayResult" required><option value="PROFIT">Profit — up 1 step</option><option value="BREAK-EVEN">Break-even — down 1 step</option><option value="LOSS">Loss — down 2 steps</option></select></label>
+          <label>Yesterday's CPA<input id="yesterdayCPA" name="yesterdayCPA" type="number" min="0.01" step="any" required><small>Your actual cost to acquire one project.</small></label>
+        </div></fieldset>
+        <fieldset><legend>03 / Team</legend><div class="fields">
+          <label>Active people tomorrow<input id="activePeople" name="activePeople" type="number" min="0" step="1" required><small>More active people unlock a larger growth allowance from unused team capacity.</small></label>
+          <label>Maximum projects per person / day<input id="maxPerPerson" name="maxPerPerson" type="number" min="0.01" step="any" required><small>Your ceiling. Planned capacity stays below this.</small></label>
+        </div><p class="note">At a low budget, planned projects per person stay low. As the budget grows, the system raises planned capacity to cover demand and keeps a reserve below your maximum.</p></fieldset>
+        <details class="advanced"><summary>Growth &amp; capacity settings</summary><div class="fields">
+          <label>Base budget step (%)<input id="baseStepPct" name="baseStepPct" type="number" min="0" max="200" step="any" required></label>
+          <label>Budget taper scale<input id="taperBudget" name="taperBudget" type="number" min="0.01" step="any" required><small>Higher budgets get smaller percentage steps.</small></label>
+          <label>Smallest base step (%)<input id="minStepPct" name="minStepPct" type="number" min="0" max="99" step="any" required></label>
+          <label>Largest base step (%)<input id="maxStepPct" name="maxStepPct" type="number" min="0" max="99" step="any" required></label>
+          <label>Profit step boost per extra person (%)<input id="peopleBoostPct" name="peopleBoostPct" type="number" min="0" max="10" step="any" required><small>Each active person after the first boosts the base profit step.</small></label>
+          <label>Maximum team boost (%)<input id="maxPeopleBoostPct" name="maxPeopleBoostPct" type="number" min="0" max="50" step="any" required><small>Caps the extra increase from a larger team.</small></label>
+          <label>Extra profit step (%)<input id="profitLiftPct" name="profitLiftPct" type="number" min="0" max="50" step="any" required><small>10 makes the profit increase 10% larger. Applies to the increase, before team capacity limits.</small></label>
+          <label>Profit step boost per campaign day (%)<input id="dayBoostPct" name="dayBoostPct" type="number" min="0" max="20" step="any" required><small>Each day after day 1 increases the profit step.</small></label>
+          <label>Maximum campaign day boost (%)<input id="maxDayBoostPct" name="maxDayBoostPct" type="number" min="0" max="200" step="any" required></label>
+          <label>Grow into unused team capacity (%)<input id="capacityFillPct" name="capacityFillPct" type="number" min="0" max="50" step="any" required><small>Profit adds this share of unused team capacity to the growth budget, using your CPA.</small></label>
+          <label>Reserve below your maximum (%)<input id="reservePct" name="reservePct" type="number" min="1" max="99" step="any" required><small>10% reserve means at most 90% of your maximum.</small></label>
+          <label>Capacity above expected workload (%)<input id="headroomPct" name="headroomPct" type="number" min="0" max="100" step="any" required><small>A small operating buffer, within the reserve limit.</small></label>
+          <label>Starting projects per person / day<input id="rampPerPerson" name="rampPerPerson" type="number" min="0.01" step="any" required><small>Also the baseline at low budgets.</small></label>
+          <label>Starting period (days)<input id="rampDays" name="rampDays" type="number" min="0" step="1" required></label>
+          <label>Budget rounding unit<input id="rounding" name="rounding" type="number" min="0.01" step="any" required></label>
+        </div></details>
+        <div class="actions"><button type="button" id="save">Save my inputs</button><button type="button" id="reset">Reset defaults</button><span id="save-status" role="status"></span></div>
+      </form>
+      <div class="panel"><h2>The daily rules</h2><div class="rules">
+        <div class="rule"><span>Profit</span><strong>Up 1 aggressive step</strong></div>
+        <div class="rule"><span>Break-even</span><strong>Down 1 step</strong></div>
+        <div class="rule"><span>Loss</span><strong>Down 2 compounded steps</strong></div>
+      </div><p class="note">The base percentage step gets smaller at higher budgets. On Profit, a later campaign day raises the step and a larger team unlocks growth from unused capacity. Today's budget remains the base for tomorrow. The sales quota rounds budget ÷ CPA up to whole projects.</p></div>
+    </div>
+    <aside class="summary" aria-live="polite" aria-atomic="true">
+      <div class="hero"><div class="eyebrow">Tomorrow's recommended budget</div><time class="date" id="result-date"></time><div class="budget" id="result-budget">—</div><div class="change" id="result-change">Enter your inputs</div>
+        <div class="sales-quota" style="margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid #52705c"><div class="eyebrow">Project sales quota tomorrow</div><div id="result-quota" style="font-size:30px;font-weight:650;margin:7px 0">—</div><div id="result-quota-person" style="font-size:13px">—</div><p id="result-quota-reason" style="font-size:12px;color:#d2e0cf"></p></div>
+        <dl><dt>Yesterday's result</dt><dd id="result-outcome">—</dd><dt>Your CPA input</dt><dd id="result-cpa">—</dd><dt>Team boost on profit</dt><dd id="result-team-boost">—</dd><dt>Campaign day boost</dt><dd id="result-day-boost">—</dd><dt>Unused capacity allowance</dt><dd id="result-capacity-boost">—</dd><dt>Total budget increase / cut</dt><dd id="result-step">—</dd><dt>Multiplier before limits</dt><dd id="result-multiplier">—</dd><dt>Budget before team limit</dt><dd id="result-candidate">—</dd></dl>
+        <div class="status" id="result-status"></div><div class="explain" id="result-reason"></div>
+      </div>
+      <section class="action budget-ceiling" aria-labelledby="budget-ceiling-title"><h3 id="budget-ceiling-title">Estimated budget where profit growth stops</h3><div class="capacity-value" id="result-max-budget">—</div><p class="capacity-context">The daily budget that stays flat even after more profitable days.</p>
+        <dl class="metric-list"><dt>Est. profitable days to max</dt><dd id="result-days-to-max">—</dd><dt>Est. date at max (PH)</dt><dd id="result-max-date">—</dd><dt>Projects at growth-stop budget</dt><dd id="result-max-projects">—</dd><dt>Next profitable day</dt><dd id="result-next-profit-budget">—</dd><dt>Team capacity ceiling</dt><dd id="result-capacity-ceiling">—</dd><dt>Current planning cap</dt><dd id="result-budget-ceiling">—</dd></dl>
+        <p id="result-ceiling-formula"></p><p id="result-ceiling-note"></p><p class="note">Assumes continued profit with unchanged team, CPA, growth, capacity, and rounding settings; only campaign age advances. This is a conditional projection, not a guarantee of profitable results.</p>
+      </section>
+      <div class="action"><h3>Automatic projects per person</h3><div class="capacity-value" id="result-per-person">—</div><div class="capacity-context" id="result-capacity-context"></div>
+        <dl class="metric-list"><dt>Your maximum / person</dt><dd id="result-max">—</dd><dt>Upper limit with reserve</dt><dd id="result-safe-max">—</dd><dt>Team capacity / day</dt><dd id="result-capacity">—</dd><dt>Estimated new projects at CPA</dt><dd id="result-acquisitions">—</dd><dt>Average quota / person</dt><dd id="result-workload">—</dd></dl>
+        <div class="capacity-bar" role="img" aria-label="Automatically planned capacity below your maximum"><span id="bar-capacity"></span></div><div class="capacity-legend" id="result-reserve"></div><p id="result-capacity-action"></p>
+      </div>
+    </aside>
+  </div>
+  <section class="panel examples"><h2>Example scenarios</h2><p class="note">Independent examples. Compare the budget and sales quota with 5 or 10 active people using the same starting inputs.</p><div class="table-wrap"><table><thead><tr><th>Scenario</th><th class="num">Result</th><th class="num">Multiplier</th><th class="num">Sales quota</th><th class="num">Tomorrow</th><th>Open</th></tr></thead><tbody id="scenarios"></tbody></table></div></section>
+  <section class="panel formulas"><details><summary>Copyable formulas</summary><p>Use the named inputs below. Percentage values in formulas are decimals: 10% = 0.10. One acquisition represents one project.</p><pre id="formula-text"></pre><button type="button" id="copy-formulas">Copy formulas</button><span id="copy-status" role="status"></span></details></section>
+  <footer><p>Sample amounts are in Philippine pesos. Yesterday's CPA is used as the planning estimate for tomorrow; actual acquisitions may differ. This calculator recommends a budget and team workload.</p></footer>
+</main>
+<script id="budget-model" src="budget-model.js"></script>
+<script src="budget-planner.js"></script>
+</body>
+</html>
